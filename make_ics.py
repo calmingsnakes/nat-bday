@@ -51,22 +51,19 @@ def esc(text: str) -> str:
 
 
 def fold(line: str) -> str:
-    """Pliega lineas a 75 octetos sin partir caracteres multibyte."""
-    raw = line.encode("utf-8")
-    if len(raw) <= 75:
+    """Pliega a maximo 75 octetos por linea fisica, sin partir multibyte."""
+    if len(line.encode("utf-8")) <= 75:
         return line
-    parts, cur = [], b""
+    parts, cur, limit = [], b"", 75
     for ch in line:
         b = ch.encode("utf-8")
-        if len(cur) + len(b) > 75:
+        if len(cur) + len(b) > limit:
             parts.append(cur)
             cur = b""
+            limit = 74  # la linea de continuacion gasta 1 octeto en el espacio
         cur += b
     parts.append(cur)
-    out = parts[0].decode("utf-8")
-    for p in parts[1:]:
-        out += "\r\n " + p.decode("utf-8")
-    return out
+    return "\r\n ".join(p.decode("utf-8") for p in parts)
 
 
 lines = [
@@ -77,8 +74,9 @@ lines = [
     "METHOD:PUBLISH",
     "X-WR-CALNAME:🩸 Nat's Vampire Bday",
     "X-WR-TIMEZONE:" + TZID,
-    VTIMEZONE,
-    "BEGIN:VEVENT",
+]
+lines += VTIMEZONE.split("\n")
+lines += [
     "UID:" + UID,
     "DTSTAMP:20261006T215200Z",
     "SEQUENCE:" + str(SEQ),
@@ -101,6 +99,13 @@ if REMINDER_MINUTES:
 lines += ["END:VEVENT", "END:VCALENDAR"]
 
 ics = "\r\n".join(fold(l) for l in lines) + "\r\n"
+
+# --- autocontrol: nada de LF sueltos ni lineas fisicas de mas de 75 octetos ---
+physical = ics.split("\r\n")
+assert ics.count("\n") == ics.count("\r\n"), "hay LF sueltos (finales de linea mezclados)"
+assert all(len(l.encode("utf-8")) <= 75 for l in physical), "hay lineas de mas de 75 octetos"
+assert physical[0] == "BEGIN:VCALENDAR" and physical[-2] == "END:VCALENDAR", "estructura rota"
+
 out = pathlib.Path(__file__).with_name("nat-bday.ics")
-out.write_text(ics, encoding="utf-8", newline="")
-print("escrito:", out, len(ics), "bytes")
+out.write_bytes(ics.encode("utf-8"))
+print("escrito:", out, len(ics.encode("utf-8")), "bytes |", len(physical) - 1, "lineas | validacion OK")

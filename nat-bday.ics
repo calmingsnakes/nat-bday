@@ -8,15 +8,12 @@ X-WR-TIMEZONE:America/Mexico_City
 BEGIN:VTIMEZONE
 TZID:America/Mexico_City
 BEGIN:STANDARD
-DTSTART:19700101T00
- 0000
+DTSTART:19700101T000000
 TZOFFSETFROM:-060000
 TZOFFSETTO:-060000
 TZNAME:CST
 END:STANDARD
-END:VT
- IMEZONE
-BEGIN:VEVENT
+END:VTIMEZONE
 UID:nat-vampire-bday-31oct2026@calmingsnakes.github.io
 DTSTAMP:20261006T215200Z
 SEQUENCE:1
@@ -26,8 +23,8 @@ SUMMARY:🩸2️⃣9️⃣ Nat's Vampire Bday🩸31 OCT - Final Chapter of
  my 20s
 LOCATION:Por definir 🔜
 DESCRIPTION:Final Chapter of my 20s 🩸\nDress code: vampiro.\nLugar por d
- efinir — si te suscribiste al calendario\, la ubicación aparece aquí so
- lita.
+ efinir — si te suscribiste al calendario\, la ubicación aparece aquí s
+ olita.
 STATUS:CONFIRMED
 TRANSP:OPAQUE
 BEGIN:VALARM
