@@ -77,6 +77,7 @@ lines = [
 ]
 lines += VTIMEZONE.split("\n")
 lines += [
+    "BEGIN:VEVENT",
     "UID:" + UID,
     "DTSTAMP:20261006T215200Z",
     "SEQUENCE:" + str(SEQ),
@@ -105,6 +106,8 @@ physical = ics.split("\r\n")
 assert ics.count("\n") == ics.count("\r\n"), "hay LF sueltos (finales de linea mezclados)"
 assert all(len(l.encode("utf-8")) <= 75 for l in physical), "hay lineas de mas de 75 octetos"
 assert physical[0] == "BEGIN:VCALENDAR" and physical[-2] == "END:VCALENDAR", "estructura rota"
+for tag in ("BEGIN:VEVENT", "END:VEVENT", "BEGIN:VTIMEZONE", "END:VTIMEZONE"):
+    assert physical.count(tag) == 1, f"falta o sobra {tag}"
 
 out = pathlib.Path(__file__).with_name("nat-bday.ics")
 out.write_bytes(ics.encode("utf-8"))
