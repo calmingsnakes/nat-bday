@@ -1,0 +1,40 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//calmingsnakes//nat-bday//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:🩸 Nat's Vampire Bday
+X-WR-TIMEZONE:America/Mexico_City
+BEGIN:VTIMEZONE
+TZID:America/Mexico_City
+BEGIN:STANDARD
+DTSTART:19700101T00
+ 0000
+TZOFFSETFROM:-060000
+TZOFFSETTO:-060000
+TZNAME:CST
+END:STANDARD
+END:VT
+ IMEZONE
+BEGIN:VEVENT
+UID:nat-vampire-bday-31oct2026@calmingsnakes.github.io
+DTSTAMP:20261006T215200Z
+SEQUENCE:1
+DTSTART;TZID=America/Mexico_City:20261031T200000
+DTEND;TZID=America/Mexico_City:20261101T030000
+SUMMARY:🩸2️⃣9️⃣ Nat's Vampire Bday🩸31 OCT - Final Chapter of 
+ my 20s
+LOCATION:Por definir 🔜
+DESCRIPTION:Final Chapter of my 20s 🩸\nDress code: vampiro.\nLugar por d
+ efinir — si te suscribiste al calendario\, la ubicación aparece aquí so
+ lita.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:🩸2️⃣9️⃣ Nat's Vampire Bday🩸31 OCT - Final Chapter
+  of my 20s
+TRIGGER:-PT120M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
